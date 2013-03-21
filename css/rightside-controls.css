@@ -1,0 +1,577 @@
+
+.claro {
+margin: 0;
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | Font Icons, DUH! Of course these should load first!
+ |
+ ------------------------------------------------------------------------------
+*/
+@font-face {
+font-family: 'icomoon';
+src:url('../fonts/icomoon.eot');
+src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+url('../fonts/icomoon.woff') format('woff'),
+url('../fonts/icomoon.ttf') format('truetype'),
+url('../fonts/icomoon.svg#icomoon') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+.ico-food:before, .ico-aid:before, .ico-library:before, .ico-camera:before, .ico-map:before, .ico-books:before, .ico-magnet:before, .ico-link:before, .ico-home:before, .ico-office:before, .ico-home-2:before, .ico-home-3:before, .ico-map-2:before, .ico-compass:before, .ico-location:before, .ico-location-2:before, .ico-shield:before, .ico-accessibility:before, .ico-trophy:before, .ico-bullhorn:before, .ico-road:before, .ico-airplane:before, .ico-cone:before, .ico-apple:before, .ico-print:before, .ico-switch:before, .ico-question:before, .ico-search:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.ico-food:before {
+	content: "\e000";
+}
+.ico-aid:before {
+	content: "\e001";
+}
+.ico-library:before {
+	content: "\e002";
+}
+.ico-camera:before {
+	content: "\e003";
+}
+.ico-map:before {
+	content: "\e004";
+}
+.ico-books:before {
+	content: "\e005";
+}
+.ico-magnet:before {
+	content: "\e006";
+}
+.ico-link:before {
+	content: "\e007";
+}
+.ico-home:before {
+	content: "\e008";
+}
+.ico-office:before {
+	content: "\e009";
+}
+.ico-home-2:before {
+	content: "\e00a";
+}
+.ico-home-3:before {
+	content: "\e00b";
+}
+.ico-map-2:before {
+	content: "\e00c";
+}
+.ico-compass:before {
+	content: "\e00d";
+}
+.ico-location:before {
+	content: "\e00e";
+}
+.ico-location-2:before {
+	content: "\e00f";
+}
+.ico-shield:before {
+	content: "\e010";
+}
+.ico-accessibility:before {
+	content: "\e011";
+}
+.ico-trophy:before {
+	content: "\e012";
+}
+.ico-bullhorn:before {
+	content: "\e013";
+}
+.ico-road:before {
+	content: "\e014";
+}
+.ico-airplane:before {
+	content: "\e015";
+}
+.ico-cone:before {
+	content: "\e016";
+}
+.ico-apple:before {
+	content: "\e017";
+}
+.ico-print:before {
+	content: "\e018";
+}
+.ico-switch:before {
+	content: "\e019";
+}
+.ico-question:before {
+	content: "\e01a";
+}
+.ico-search:before {
+	content: "\e01b";
+}
+
+/*
+ ------------------------------------------------------------------------------
+ |
+ | Search Form
+ |
+ ------------------------------------------------------------------------------
+*/
+.search-cell {
+border: 1px solid #efefef;
+margin-top: -1px;
+padding-left: 5px;
+padding-top: 4px;
+background:url(../img/brillant.png) ;
+}
+form.form-search{
+	margin-bottom: 5px;
+}
+form.form-search button.btn{
+	background-color: #AB0520;
+	display: inline-block;
+padding: 4px 9px;
+margin-bottom: 0;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+vertical-align: middle;
+cursor: pointer;
+color: #FFFFFF;
+text-shadow: none;
+background-color: #AB0520;
+background-image: none;
+background-image: none;
+background-image: none;
+background-image: none;
+background-image: none;
+background-repeat: repeat-x;
+filter: s;
+border-color: transparent;
+border-color: transparent;
+filter: none;
+border: 1px solid rgb(239, 239, 239);
+border-bottom-color: rgb(239, 239, 239);
+-webkit-border-radius: 0px;
+-moz-border-radius: 0px;
+border-radius: 0px;
+-webkit-box-shadow: transparent;
+-moz-box-shadow: transparent;
+box-shadow: transparent;
+margin-left: 0;
+}
+
+input.search-query {
+padding-right: 14px;
+padding-right: 4px 9;
+padding-left: 14px;
+padding-left: 4px 9;
+margin-bottom: 0;
+-webkit-border-radius: 0px;
+-moz-border-radius: 0px;
+border-radius: 0px;
+}
+input[type="text"]:focus {
+border-color: rgb(171, 5, 32);
+outline: 0;
+outline: thin dotted 9;
+/*-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(171, 5, 32, .6);
+-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(171, 5, 32,.6);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(171, 5, 32, .6);*/
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+}
+input[type="text"] {
+background-color: white;
+border: 1px solid rgb(239, 239, 239);
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+-webkit-transition: border linear .2s, box-shadow linear .2s;
+-moz-transition: border linear .2s, box-shadow linear .2s;
+-o-transition: border linear .2s, box-shadow linear .2s;
+transition: border linear .2s, box-shadow linear .2s;
+}
+form.form-search .input-medium {
+width: 191px;
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | arizona inspired button colors
+ |
+ ------------------------------------------------------------------------------
+*/
+.arizona-btn-group{
+
+}
+.arizona-btn-group .button-tag:hover .glyph{
+color:#FFFFFF;
+cursor: pointer;
+}
+.arizona-btn-group .button-tag.accessible:hover .arizona-btn{
+background-color:#5C8CBB;
+}
+.arizona-btn-group .button-tag.athletics:hover .arizona-btn{
+background-color:#AB0520;
+}
+.arizona-btn-group .button-tag.museums-arts:hover .arizona-btn{
+background-color:#781D7E;
+}
+.arizona-btn-group .button-tag.health-safety:hover .arizona-btn{
+background-color:#D492B3;
+}
+.arizona-btn-group .button-tag.libraries:hover .arizona-btn{
+background-color:#FFD18B;
+}
+.arizona-btn-group .button-tag.parking:hover .arizona-btn{
+background-color:#AB0520;
+}
+.arizona-btn-group .button-tag.food:hover .arizona-btn{
+background-color:#93A445;
+}
+.arizona-btn-group .button-tag.housing-students:hover .arizona-btn{
+background-color:#AB0520;
+}
+.arizona-btn-group .button-tag.transportation:hover .arizona-btn{
+background-color:#AB0520;
+}
+.arizona-btn-group .button-tag.attractions:hover .arizona-btn{
+background-color:#8E2323;
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | Backgrounds for hover
+ |
+ ------------------------------------------------------------------------------
+*/
+.arizona-btn-group .button-tag.accessible:hover {
+background-color: rgba(92, 140, 187, .1);
+}
+.arizona-btn-group .button-tag.athletics:hover{
+background-color: rgba(171, 5, 32, .1);
+}
+.arizona-btn-group .button-tag.museums-arts:hover {
+background-color: rgba(120, 29, 126, .1);
+}
+.arizona-btn-group .button-tag.health-safety:hover {
+background-color: rgba(212, 146, 179, .1);
+}
+.arizona-btn-group .button-tag.libraries:hover {
+background-color: rgba(255, 209, 139, .1);
+}
+.arizona-btn-group .button-tag.parking:hover{
+background-color: rgba(171, 5, 32, .1);
+}
+.arizona-btn-group .button-tag.food:hover{
+background-color: rgba(147, 164, 69, .10);
+}
+.arizona-btn-group .button-tag.housing-students:hover {
+background-color: rgba(171, 5, 32, .1);
+}
+.arizona-btn-group .button-tag.transportation:hover{
+background-color: rgba(171, 5, 32, .1);
+}
+.arizona-btn-group .button-tag.attractions:hover{
+background-color: rgba(142, 35, 35, .1);
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | radios - selected/checked styles
+ |
+ ------------------------------------------------------------------------------
+*/
+input.radio {
+display: none;
+}
+input[type="radio"]:checked+label.button-tag .arizona-btn{
+color:#FFFFFF;
+}
+input[type="radio"]:checked+label.button-tag.accessible{
+background-color: rgba(92, 140, 187, .1);
+} 
+input[type="radio"]:checked+label.button-tag.accessible .arizona-btn{
+background-color:#5C8CBB;
+}
+input[type="radio"]:checked+label.button-tag.athletics{
+background-color: rgba(171, 5, 32, .1);
+} 
+input[type="radio"]:checked+label.button-tag.athletics .arizona-btn{
+background-color:#AB0520;
+}
+input[type="radio"]:checked+label.button-tag.museums-arts{
+background-color: rgba(120, 29, 126, .1);
+}
+input[type="radio"]:checked+label.button-tag.museums-arts .arizona-btn{
+background-color:#781D7E;
+}
+input[type="radio"]:checked+label.button-tag.health-safety{
+background-color: rgba(212, 146, 179, .1);
+} 
+input[type="radio"]:checked+label.button-tag.health-safety .arizona-btn{
+background-color:#D492B3;
+}
+input[type="radio"]:checked+label.button-tag.libraries{
+background-color: rgba(255, 209, 139, .1);
+} 
+input[type="radio"]:checked+label.button-tag.libraries .arizona-btn{
+background-color:#FFD18B;
+}
+input[type="radio"]:checked+label.button-tag.parking{
+background-color: rgba(171, 5, 32, .1);
+} 
+input[type="radio"]:checked+label.button-tag.parking .arizona-btn{
+background-color:#AB0520;
+}
+input[type="radio"]:checked+label.button-tag.food{
+background-color: rgba(147, 164, 69, .10);
+} 
+input[type="radio"]:checked+label.button-tag.food .arizona-btn{
+background-color:#93A445;
+}
+input[type="radio"]:checked+label.button-tag.housing-students{
+background-color: rgba(171, 5, 32, .1);
+} 
+input[type="radio"]:checked+label.button-tag.housing-students .arizona-btn{
+background-color:#AB0520;
+}
+input[type="radio"]:checked+label.button-tag.transportation{
+background-color: rgba(171, 5, 32, .1);
+}
+input[type="radio"]:checked+label.button-tag.transportation .arizona-btn{
+background-color:#AB0520;
+}
+input[type="radio"]:checked+label.button-tag.attractions{
+background-color: rgba(142, 35, 35, .1);
+} 
+input[type="radio"]:checked+label.button-tag.attractions .arizona-btn{
+background-color:#8E2323;
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | Here are more formatting rules tee hee.
+ |
+ ------------------------------------------------------------------------------
+*/
+.right-side-tools{
+border: 1px solid #efefef;
+background:url(../img/brillant.png);
+padding-top: 5px;
+padding-left: 4px;
+padding-bottom: 4px;
+padding-right: 5px;
+position: fixed;
+right: -279px;
+top: 25%;
+}
+.visible {
+	right:0;
+}
+.label {
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
+cursor:pointer;
+}
+/* .right-side-tools{ */
+/* border: 1px solid #efefef; */
+/* background:url(../img/brillant.png); */
+/* padding-top: 5px; */
+/* padding-left: 4px; */
+/* padding-bottom: 4px; */
+/* padding-right: 5px; */
+/* position: fixed; */
+/* top: 25%; */
+/* } */
+
+label.button-tag {
+margin: 0;
+}
+button.arizona-btn,.candy-bar .arizona-btn {
+background-color: white;
+border: 1px solid #efefef;
+padding: 4px 8px 4px 8px;
+}
+.arizona-btn-group.vertical-arizona {
+background-color: #FFFFFF;
+width: 269px;
+}
+.arizona-btn-group .label {
+float: left;
+padding-top: 12px;
+}
+.arizona-btn-group .button-tag, .candy-bar {
+border: 1px solid rgb(239, 239, 239);
+margin-top: -1px;
+padding-left: 6px;
+padding-top: 3px;
+padding-bottom: 3px;
+
+}
+.label {
+display: inline;
+font-size: 11px;
+text-align: left;
+width: 215px;
+vertical-align: middle;
+margin-right: 5px;
+font-family: 'Open Sans', sans-serif;
+text-transform: uppercase;
+}
+.controls-categories .btn {
+display: inline-block;
+}
+
+.btn {
+border-radius: 0;
+margin-top: -1px;
+}
+.candy-bar {
+text-align: right;
+padding-right: 6px;
+background:url(../img/brillant.png);
+}
+.candy-bar a, .candy-bar a:visited {
+display: inline-block;
+text-decoration:none;
+color:#363636;
+}
+.candy-bar .more-resources {
+float: left;
+padding-top: 7px;
+}
+.button-hide {
+border: 1px solid rgb(239, 239, 239);
+background: url(../img/brillant.png);
+display: block;
+height: 80px;
+width: 40px;
+position: absolute;
+top: 40%;
+left: -41px;
+border-right: none;
+cursor: pointer;
+}
+/*
+ ------------------------------------------------------------------------------
+ |
+ | checkbox on/off switch
+ |
+ ------------------------------------------------------------------------------
+*/
+.imagery .label {
+width: 129px;
+}
+
+.basemap{
+	width:50px;
+}
+.switch input {
+bottom: 0;
+cursor: pointer;
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+height: 100%;
+left: 0;
+opacity: 0;
+-moz-opacity: 0;
+position: absolute;
+right: 0;
+top: 0;
+width: 100%;
+z-index: 100;
+}
+label.imagery-label{
+height: 100%;
+width: 100%;
+}
+.switch {
+position: relative;
+height: 24px;
+width: 87px;
+}
+.switch label {
+background: rgba(171, 5, 32, .3);
+border-radius: 0px;
+box-shadow: inset 0 3px 8px 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.5);
+display: block;
+height: 100%;
+position: relative;
+width: 100%;
+}
+.switch label:after {
+background: #ccc; /* Fallback */
+background: linear-gradient(#f2f2f2, #ababab);
+border-radius: inherit;
+content: "";
+position: absolute;
+top: -8px; right: -8px; bottom: -8px; left: -8px;
+z-index: -1;
+}
+.switch label:before {
+border-radius: inherit;
+box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+content: "";
+filter: blur(1px); /* Future-proof */
+-webkit-filter: blur(1px); /* Smooth trick */
+position: absolute;
+top: -18px; right: -18px; bottom: -18px; left: -18px;
+z-index: -1;
+}
+.switch label i {
+display: block;
+height: 100%;
+width: 60%;
+position: absolute;
+left: 0;
+top: -1px;
+z-index: 2;
+border-radius: inherit;
+background: white;
+background: white;
+border: 1px solid rgb(239, 239, 239);
+}
+.switch label i:after {
+content: "";
+position: absolute;
+left: 15%;
+top: 25%;
+width: 70%;
+height: 50%;
+// background: #d2cbc3; /* Fallback */
+// background: linear-gradient(#cbc7bc, #d2cbc3);
+border-radius: inherit;
+}
+.switch label i::before {
+content: "off";
+position: absolute;
+top: 50%;
+right: -50%;
+margin-top: -10px;
+color: rgb(102, 102, 102);
+color: rgba(0, 0, 0, 0.3);
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+text-transform: uppercase;
+}
+.switch input:checked ~ label { /* Background */
+background: #9abb82;
+}
+.switch input:checked ~ label i { /* Toggle */
+left: auto;
+right: -1%;
+}
+.switch input:checked ~ label i:before { /* On/off */
+content: "on";
+right: 115%;
+color: #82a06a;
+}

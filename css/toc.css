@@ -1,0 +1,15 @@
+.toc {
+position: fixed;
+top: 42px;
+width: 100%;
+text-align: center;
+}
+.toc-tools {
+width: 500px;
+height: 30px;
+border: 1px solid rgb(239, 239, 239);
+display: block;
+margin-left: auto;
+margin-right: auto;
+background:url(../img/brillant.png) ;
+}

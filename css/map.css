@@ -1,0 +1,236 @@
+/*TODO: CLEAN OUT DUPLICATE SELECTORS THAT GET OVERRIDDEN BY STYLE.CSS */
+html, body {
+    margin:0;
+    padding:0;
+    height: 100%;
+    overflow: hidden;
+    background-color:black;
+    font-family:tahoma;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right:4px;
+    margin-top:-2px;
+}
+
+#map-wrapper {
+    top:42px;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#map {
+    height: 100%;
+    background-color: gray;
+}
+
+#toc p {
+    text-align: center;
+}
+#toc {
+    background: url("../images/box.png") no-repeat scroll 0 0 transparent;
+    height: 510px;
+    margin-top: -250px;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    width: 214px;
+    z-index: 99999;
+} 
+
+#toc #shareUrl {
+    font-size: 10px;
+    width:145px;
+    visibility:hidden;
+}
+
+#toctop {
+    /*background: url("../images.toctop.png") no-repeat scroll 0 0 transparent; 
+    */
+    /*
+    background-color: white;
+    color:black;
+    position: absolute;
+    left:50%;
+    height: 50px;
+    width: 714px;
+    */
+    //margin-left: -357px;     
+    /* = half the width of div */
+    /*
+    margin-top:-65px;
+    text-align:center;
+    z-index: 99999;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius:15px;
+    border-bottom: solid black 1px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    -webkit-box-shadow: 3px 3px 5px #666;
+    -moz-box-shadow: 3px 3px 5px #666;
+    box-shadow: 3px 3px 5px #666;
+*/
+}
+
+/*#toctop_items {
+    margin:0 auto;
+    padding-top:7px;
+    display:inline-block;
+    line-height: 18px;
+}*/
+
+.toctop_item {
+    float: left;
+    margin: 0 10px;
+}
+
+.toctop_item img {
+    cursor:pointer;
+}
+
+.toctop_item_zoom {
+    line-height: 11px;
+}
+
+#toggleHandle {
+    background: url("../images/toggle.png") no-repeat scroll 0 20px transparent;
+    cursor: e-resize;
+    display: block;
+    height: 81px;
+    left: -10px;
+    overflow: hidden;
+    position: absolute;
+    text-indent: -999px;
+    top: 171px;
+    width: 26px;
+}
+
+/*Bootstrap Overrides */
+.nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: #2800C8;
+    color: #FFFFFF;
+}
+
+
+a {
+    color: #2800C8;
+    text-decoration: none;
+}
+
+/*ESRI Print Overrides
+*/
+
+.esriPrint {
+    padding:0;
+}
+
+
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    background-image: linear-gradient(#FFFFFF 20%, #F6F6F6 50%, #EEEEEE 52%, #F4F4F4 100%);
+    border: 1px solid #AAAAAA;
+    /*border-radius: 5px 5px 5px 5px;
+    */box-shadow: 0 0 3px #FFFFFF inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    color: #999999;
+/*    height: 23px;
+    line-height: 24px;*/
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.claro .dijitComboButton .dijitStretch {
+    width:130px;
+}
+
+/*.claro .dijitComboButton .dijitStretch {
+    border-radius: 4px 0 0 4px;
+}*/
+
+div#map_infowindow.simpleInfoWindow div.title b {
+    color:black;
+}
+
+div#map_infowindow.simpleInfoWindow div.content a {
+    margin-top: -4px;
+}
+
+
+/*div#print_button div.esriPrint table#dijit_form_ComboButton_0.dijit tbody tr td.dijitReset div#dijit_form_ComboButton_0_button.dijitReset div#dijit_form_ComboButton_0_label.dijitReset {
+{
+    padding:8px 12px;
+}  */
+
+
+/*
+
+.dijitButtonNode {
+    color: #FFFFFF;
+    background-color:#2800C8;
+}
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+    background-color: #2800C8;
+    background-image: linear-gradient(#FFFFFF 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
+    background-repeat: repeat-x;
+    border: 1px solid #759DC0;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    color: #FFFFFF;
+    padding: 2px 4px 4px;
+}
+*/
+
+/*
+@-webkit-keyframes
+pulse
+{
+    0%
+{
+opacity: 1.0;
+
+}
+45%
+{
+opacity: .20;
+
+}
+100%
+{
+opacity: 1.0;
+
+}
+}
+@-moz-keyframes
+pulse
+{
+0%
+{
+opacity: 1.0;
+}
+45%
+{
+opacity: .20;
+
+}
+100%
+{
+opacity: 1.0;
+}
+}
+
+#map_graphics_layer {
+-webkit-animation-duration: 3s;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-name: pulse;
+-moz-animation-duration: 3s;
+-moz-animation-iteration-count: infinite;
+-moz-animation-name: pulse;
+}
+*/

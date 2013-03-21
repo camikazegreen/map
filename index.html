@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Campus Map | University of Arizona</title>
+
+    <link rel="stylesheet" href="http://redbar.arizona.edu/sites/default/files/ua-banner/ua-web-branding/css/ua-web-branding.css" media="all" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css" />
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.3compact"></script>
+    <link rel="stylesheet" href="chosen/chosen.css" media="all">    
+    <link rel="stylesheet" href="css/map.css" type="text/css" media="all" />    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="ua-icons/style.css" />
+
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="chosen/chosen.jquery.min.js"></script>
+    
+<!-- 
+    <script src="js/select2.js"></script>
+    <link rel="stylesheet" href="UofA-icons/css/select2.css" media="all">    
+ -->
+
+    <script src="js/ua-map.js"></script>
+    <script src="js/ua-toc.js"></script>
+    <script src="js/ua-toc-layers.js"></script>
+
+
+    <script>
+        $(window).load(function () {
+            toc_init();
+        });
+
+        //Making the page responsive.
+        function resizeElementHeight(element) {
+          var element=document.getElementById('rightSideFilters');
+          var height = 0;
+          var body = window.document.body;
+          if (window.innerHeight) {
+              height = window.innerHeight;
+          } else if (body.parentElement.clientHeight) {
+              height = body.parentElement.clientHeight;
+          } else if (body && body.clientHeight) {
+              height = body.clientHeight;
+          }
+           element.style.height = ((height - element.offsetTop - 49) + 'px');
+        }
+        window.onresize=resizeElementHeight;
+        onload=resizeElementHeight;
+    </script>
+</head>
+<div class="modal-box-wrapper moreInfo">
+    <div class="modal-box-container brillant ">
+        <div class="modal-box-surface">
+            <div class="rowfluid">
+                <div class="span12"><h4>More Resources</h4></div>
+            </div>
+            <div class="rowfluid">
+                <p><a href="http://parking.arizona.edu/maps">Parking Map</a></p>
+                <p><a href="campus">Campus Map for UA Community</a></p>
+                <p><a href="campus">Enterprise GIS Map (Logon Required)</a></p>
+                <p><a href="http://www.pdc.arizona.edu/maps/">Planning, Design &amp; Construction Projects</a></p>
+                <p><a href="http://www.arizona.edu/apps">Mobile Maps for Android and Apple</a></p>
+                <p><a href="http://gis.pima.gov/maps/mapguide">Pima County</a></p>
+                <p><a href="http://cms3.tucsonaz.gov/mapcenter">City of Tucson</a></p>
+                <h4>Directions to Campus</h4>
+                <p><a href="link"></a></p>
+                <p><a href="link">from Nogales / I-19 to campus</a></p>
+                <p><a href="link">from Phoenix / I-10 / N-W to campus</a></p>
+                <p><a href="link">from New Mexico / I-10  /  East to campus</a></p>    
+            </div>
+            <div class="modal-box-close-button brillant"><a name="close" onclick="getMoreResources()"><div class="close"></div></a></div>
+        </div>
+    </div>
+</div>
+<div class="copyright">
+    <p>Copyright 2013 © Arizona Board of Regents. The University of Arizona, Tucson, Arizona</p>
+</div>
+<body class="claro" >
+
+    <div id="ua-web-branding-banner-v1" class="ua-wrapper bgDark red">
+        <a class="ua-home asdf" href="http://arizona.edu" title="The University of Arizona">
+            <p>The University of Arizona</p>
+        </a>
+    </div>
+    <div id="ua-web-branding-tag-v1" class="ua-wrapper bgDark red">
+        <a class="ua-home asdf" href="http://arizona.edu" title="The University of Arizona">
+            <p>The University of Arizona</p>
+        </a>
+    </div>
+
+    <div id="map-wrapper">
+        <div id="toctop">
+            <div id="toctop_items" class="layer-controls-wrapper">
+                <div class="layer-controls-container brillant">
+                    <div class="layer-controls-toggle-sub"></div>
+                    <div class="layer-controls-toggle brillant" style="text-align:center;">
+                        <div class="grippy layers ico-menu"></div>
+                    </div>
+                    <div class="layer-controls-surface">
+                        <div class="layer-controls-table">
+<!-- Default -->  
+                            <div class="defaultTOC">
+                                <p>Welcome to the University of Arizona Map<p>
+                            </div>  
+<!-- Accessibility -->
+                            <div class="accessibilityTOC">            
+                                <input class="checkbox toctop_checkbox" id="layerCheck-1" type="checkbox" name="layer-controls" checked='checked' value="classrooms1,classrooms2,classrooms3">
+                                <label class="button-tag" for="layerCheck-1">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Audible Device Classrooms</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkAccessibilityElevators' type='checkbox' name='accessibility' checked='checked' value='elevators1,elevators2,elevators3'>
+                                <label class="button-tag" for="chkAccessibilityElevators">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Elevators</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkAccessibilityPaths' type='checkbox' name='accessibility' checked='checked' value='ados'>
+                                <label class="button-tag" for="chkAccessibilityPaths">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Accessible Entrances</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkAccessibilityBathrooms' type='checkbox' name='accessibility' checked='checked' value='bathrooms1,bathrooms2,bathrooms3'>
+                                <label class="button-tag" for="chkAccessibilityBathrooms">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Unisex Bathrooms</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkAccessibilityParking' type='checkbox' name='accessibility' checked='checked' value='disabledParking1,disabledParking2,disabledParking3'>
+                                <label class="button-tag" for="chkAccessibilityParking">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Disabled Parking</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox"  id='chkAccessibilityEntrances' type='checkbox' name='accessibility' checked='checked' value='entrances1,entrances2,entrances3,ramps'>
+                                <label class="button-tag" for="chkAccessibilityEntrances">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Accessible Paths, Ramps</div>
+                                </label>
+                            </div>
+<!-- Athletics  -->
+                            <div class="athleticsTOC">
+                                <div class="button-tag zoomToLayer" id='athleticsOffCampus' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Off Campus</div>
+                                </div>
+                                 <div class="button-tag zoomToLayer" id="athleticsOnCampus" title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-in" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">On Campus</div>
+                                </div>
+                            </div>
+<!-- Museums -->
+                            <div class="museumsTOC">
+                                <div class="button-tag zoomToLayer" id='museums' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Museums & Art Venues</div>
+                                </div>
+                                 
+                            </div>
+<!-- Health and Safety -->
+                            <div class="safetyTOC">
+                                <input class="checkbox toctop_checkbox" id='chkAEDS' type='checkbox' name='safety' checked='checked' value='aeds1,aeds2,aeds3'>
+                                <label class="button-tag" for="chkAEDS">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">AED Devices</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkEmergencyPhones' type='checkbox' name='safety' checked='checked' value='emergencyPhones1,emergencyPhones2,emergencyPhones3'>
+                                <label class="button-tag" for="chkEmergencyPhones">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Emergency Phones</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='campusRec' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Campus Rec</div>
+                                </div>
+                                <input class="checkbox toctop_checkbox" id='chkHospitals'type='checkbox' name='safety' checked='checked' value='hospitals'>
+                                <label class="button-tag" for="chkHospitals">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Hospitals</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='police' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">UA Police</div>
+                                </div>
+                                <input class="checkbox toctop_checkbox" id='chkFitnessPaths' type='checkbox' name='safety' checked='checked' value='walkingPaths,fitCourse,fitnessStations1,fitnessStations2,fitnessStations3'>
+                                    <label class="button-tag" for="chkFitnessPaths">
+                                        <button class="arizona-btn brillant child-last">
+                                                <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                        </button>
+                                        <div class="label">Fitness Paths</div>
+                                    </label>
+                                <div class="button-tag zoomToLayer" id='safeRide' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Safe Ride</div>
+                                </div>
+                            </div>                             
+   
+<!-- Parking -->
+                            <div class="parkingTOC">
+                                <input class="checkbox toctop_checkbox" id='chkParkingLots' type='checkbox' name='parking' checked='checked' value='parkingLots'>
+                                <label class="button-tag" for="chkParkingLots">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Parking Lots & Garages</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox"id='chkParkingVisitor' type='checkbox' name='parking' checked='checked' value='parkingVisitor1,parkingVisitor2,parkingVisitor3,parkingVisitorLots'>
+                                <label class="button-tag" for="chkParkingVisitor">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Visitor</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkParkingDisabled' type='checkbox' name='parking' checked='checked' value='disabledParking1,disabledParking2,disabledParking3'>
+                                <label class="button-tag" for="chkParkingDisabled">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Disabled Parking</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkParkingMotorcycle' type='checkbox' name='parking' checked='checked' value='motorcycle1,motorcycle2,motorcycle3'>
+                                <label class="button-tag" for="chkParkingMotorcycle">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Motorcycle</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkParkingBicycle' type='checkbox' name='parking' checked='checked' value='bicycle1,bicycle2,bicycle3'>
+                                <label class="button-tag" for="chkParkingBicycle">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Bicycle</div>
+                                </label>
+                            </div>
+ <!-- Transportation -->
+                            <div class="transportationTOC"> 
+                                <input class="checkbox toctop_checkbox"id='chkCatTranShuttle' type='checkbox' name='transportation' checked='checked' value='catTranShuttleRoutesGreen,catTranShuttleRoutesNight,catTranShuttleRoutesOrange,catTranShuttleRoutesPurple,catTranShuttleRoutesTeal,catTranShuttleRoutesUSA,catTranShuttleStops1,catTranShuttleStops2,catTranShuttleStops3'>
+                                <label class="button-tag" for="chkCatTranShuttle">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">CatTran Shuttle</div>
+                                </label>                            
+                                <input class="checkbox toctop_checkbox" id='chkSunLinkStreetCar' type='checkbox' name='transportation' checked='checked' value='sunLinkStreetCarTracks,sunLinkStreetCarStops1,sunLinkStreetCarStops2,sunLinkStreetCarStops3'>
+                                <label class="button-tag" for="chkSunLinkStreetCar">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">SunLink Street Car</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkSunTranStops' type='checkbox' name='transportation' checked='checked' value='sunTranStops1,sunTranStops2,sunTranStops3'>
+                                <label class="button-tag" for="chkSunTranStops">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">SunTran Stops</div>
+                                </label>                            
+                                <input class="checkbox toctop_checkbox" id='chkBikeRoutes' type='checkbox' name='transportation' checked='checked' value='bikeRoutes'>
+                                <label class="button-tag" for="chkBikeRoutes">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Bike Routes</div>
+                                </label>
+                            </div>
+<!-- Eateries -->       
+                            <div class="eateriesTOC">
+                                <div class="button-tag zoomToLayer" id='eateries3' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Places to Eat</div>
+                                </div>
+                            </div>
+<!-- Student Housing -->    
+                            <div class="housingTOC">
+                                    <div class="toc-keys"><div></div>Legend:</div>
+                                    <div class="toc-keys key-greek"><div class="toc-key"></div>Greek life</div>
+                                    <div class="toc-keys key-dorms"><div class="toc-key"></div>Dorms</div>
+                            </div>
+<!-- Libraries -->  
+                            <div class="librariesTOC">
+                                <div class="button-tag zoomToLayer" id='libraries' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Libraries</div>
+                                </div>
+                            </div>
+<!-- Attractions -->
+                            <div class="attractionsTOC">
+                                <input class="checkbox toctop_checkbox" id='chkHistoricBuildings' type='checkbox' name='attractions' checked='checked' value='historicBuildings'>
+                                <label class="button-tag" for="chkHistoricBuildings">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Historic Buildings</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='chkMuseums' type='checkbox' name='attractions' checked='checked' value='museumsAttractions'>
+                                <label class="button-tag" for="chkMuseums">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                    </button>
+                                    <div class="label">Museums</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='oldMain' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Old Main</div>
+                                </div>
+                                <div class="button-tag zoomToLayer" id='visitorCenter' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Visitor Center</div>
+                                </div>
+                                <div class="button-tag zoomToLayer" id='offCampusLandmarks' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Off Campus Landmarks</div>
+                                </div>
+                           </div>
+                            </div>
+                    </div>
+                </div>
+        <!-- <div class="layer-controls-toggle brillant"style="text-align:center;">?</div> -->
+        </div>
+    </div>
+
+
+
+        <!-- arizona.edu inspired buttons. -->
+        <!-- <nav> -->
+
+        <!--    <button type="button">Accessibilityi</button> -->
+        <!--    <button type="button">Athletics</button> -->
+        <!--    <button type="button">Museums &amp; Venues</button> -->
+        <!--    <button type="button">Health &amp; Safety</button> -->
+        <!--    <button type="button">Libraries</button> -->
+        <!--    <button type="button">Parking</button> -->
+        <!--    <button type="button">Places To Eat</button> -->
+        <!--    <button type="button">Student Housing</button> -->
+        <!--    <button type="button">Transportation</button> -->
+        <!--    <button type="button">UA Attractions &amp; Landmarks</button> -->
+        <!--    <button type="button">Imagery</button> -->
+        <!-- </nav> -->
+
+        <div class="right-side-tools visible brillant">
+            <div class="right-side-overflow-hidden">
+                <div class="arizona-btn-group vertical-arizona" id="rightSideFilters">
+                    <div class="search-cell brillant">
+                         <form class="form-search">
+                             <select id="searchbox" data-placeholder="Search Buildings" tabindex="1">
+                                 <option value=""></option>
+                            </select>
+                            <!-- <button type="submit" class="btn">
+                                <div class="glyph ">
+                                    <div class="fs1 ico-search" aria-hidden="true" data-ico=""></div>
+                                </div>
+                            </button> -->
+                        </form>
+                    </div>
+<!-- Accessibility -->
+                    <input class="radio" id="rbtAccessibility" type="radio" name="layer" value="Accessibility">
+                    <label class="button-tag accessible" for="rbtAccessibility">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph ">
+                                <div class="fs1 ico-ua-accessibility" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                    <div class="label">Accessibility</div>
+                        <div class="layer-controls-table">
+                            <input class="checkbox" id="rgt-layerCheck-1" type="checkbox" name="layer-controls" value="Audible Device Classrooms">
+                            <label class="button-tag" for="rgt-layerCheck-1">
+                                <button class="arizona-btn brillant first-child">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Audible Device Classrooms</div>
+                            </label>
+                            <input class="checkbox" id="rgt-layerCheck-2" type="checkbox" name="layer-controls" value="Elevators">
+                            <label class="button-tag" for="rgt-layerCheck-2">
+                                <button class="arizona-btn brillant">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Elevators</div>
+                            </label>
+                            <input class="checkbox" id="rgt-layerCheck-3" type="checkbox" name="layer-controls" value="Elevators">
+                            <label class="button-tag" for="rgt-layerCheck-3">
+                                <button class="arizona-btn brillant">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Accessible Entrances</div>
+                            </label>
+                            <input class="checkbox" id="rgt-layerCheck-6" type="checkbox" name="layer-controls" value="Elevators">
+                            <label class="button-tag" for="rgt-layerCheck-6">
+                                <button class="arizona-btn brillant">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Unisex Bathrooms</div>
+                            </label>
+                            <input class="checkbox" id="rgt-layerCheck-4" type="checkbox" name="layer-controls" value="Elevators">
+                            <label class="button-tag" for="rgt-layerCheck-4">
+                                <button class="arizona-btn brillant">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Disabled Parking</div>
+                            </label>
+                            <input class="checkbox" id="rgt-layerCheck-5" type="checkbox" name="layer-controls" value="Elevators">
+                            <label class="button-tag" for="rgt-layerCheck-5">
+                                <button class="arizona-btn brillant child-last">
+                                    <div class="checkbox-square"><div class="checkbox-status ico-ua-x"></div></div>
+                                </button>
+                                <div class="label">Paths, Ramps</div>
+                            </label>
+
+                        </div>
+                    </label>
+<!-- Athletics -->
+                    <input class="radio" id="rbtAthletics" type="radio" name="layer" value="Athletics">
+                    <label class="button-tag athletics" for="rbtAthletics">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-athletics" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Athletics</div>
+                        <div class="layer-controls-table">
+                            <div class="button-tag zoomToLayer" id='athleticsOffCampus' title='Zoom To Layer'>
+                                <button class="arizona-btn brillant">
+                                    <div class="glyph ">
+                                        <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                    </div>
+                                </button>
+                                <div class="label">Off Campus</div>
+                            </div>
+                            <div class="button-tag zoomToLayer" id="athleticsOnCampus" title='Zoom To Layer'>
+                                <button class="arizona-btn brillant">
+                                    <div class="glyph ">
+                                        <div class="fs1 ico-ua-move-in" aria-hidden="true" data-ico="&#xe000;"></div>
+                                    </div>
+                                </button>
+                                <div class="label">On Campus</div>
+                            </div>
+                        </div>
+                    </label>
+<!-- Museums -->
+                    <input class="radio" id="rbtMuseums" type="radio" name="layer" value="Museums & Art Venues">
+                    <label class="button-tag museums-arts" for="rbtMuseums">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-museum" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Museums & Art Venues</div>
+                        <div class="layer-controls-table">
+                                <div class="button-tag zoomToLayer" id='museums' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Museums & Art Venues</div>
+                                </div>
+                        </div>
+                    </label>
+                    <input class="radio" id="rbtSafety" type="radio" name="layer" value="Health & Safety">
+                    <label class="button-tag health-safety" for="rbtSafety">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-safety" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Health & Safety</div>
+                        <div class="layer-controls-table">
+                                <input class="checkbox toctop_checkbox" id='rgt-chkAEDS' type='checkbox' name='safety' checked='checked' value='aeds1,aeds2,aeds3'>
+                                <label class="button-tag" for="rgt-chkAEDS">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">AED Devices</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkEmergencyPhones' type='checkbox' name='safety' checked='checked' value='emergencyPhones1,emergencyPhones2,emergencyPhones3'>
+                                <label class="button-tag" for="rgt-chkEmergencyPhones">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Emergency Phones</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='rgt-campusRec' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Campus Rec</div>
+                                </div>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkHospitals'type='checkbox' name='safety' checked='checked' value='hospitals'>
+                                <label class="button-tag" for="rgt-chkHospitals">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Hospitals</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='rgt-police' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">UA Police</div>
+                                </div>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkFitnessPaths' type='checkbox' name='safety' checked='checked' value='walkingPaths,fitCourse,fitnessStations1,fitnessStations2,fitnessStations3'>
+                                    <label class="button-tag" for="rgt-chkFitnessPaths">
+                                        <button class="arizona-btn brillant child-last">
+                                                <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                        </button>
+                                        <div class="label">Fitness Paths</div>
+                                    </label>
+                                <div class="button-tag zoomToLayer" id='rgt-safeRide' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Safe Ride</div>
+ 
+ </div>                               </div>
+                    </label>
+                    <input class="radio" id="rbtLibraries" type="radio" name="layer" value="Libraries">
+                    <label class="button-tag libraries" for="rbtLibraries">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-libary" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Libraries</div>
+                        <div class="layer-controls-table">
+                                <div class="button-tag zoomToLayer" id='rgt-libraries' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Libraries</div>
+                                </div>
+                            </div>
+                    </label>
+                    <input class="radio" id="rbtParking" type="radio" name="layer" value="Parking">
+                    <label class="button-tag parking" for="rbtParking">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-parking" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Parking</div>
+                        <div class="layer-controls-table">                                <input class="checkbox toctop_checkbox" id='rgt-chkParkingLots' type='checkbox' name='parking' checked='checked' value='parkingLots'>
+                                <label class="button-tag" for="rgt-chkParkingLots">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Parking Lots & Garages</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox"id='rgt-chkParkingVisitor' type='checkbox' name='parking' checked='checked' value='parkingVisitor1,parkingVisitor2,parkingVisitor3,parkingVisitorLots'>
+                                <label class="button-tag" for="rgt-chkParkingVisitor">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Visitor</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkParkingDisabled' type='checkbox' name='parking' checked='checked' value='disabledParking1,disabledParking2,disabledParking3'>
+                                <label class="button-tag" for="rgt-chkParkingDisabled">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Disabled Parking</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkParkingMotorcycle' type='checkbox' name='parking' checked='checked' value='motorcycle1,motorcycle2,motorcycle3'>
+                                <label class="button-tag" for="rgt-chkParkingMotorcycle">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Motorcycle</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkParkingBicycle' type='checkbox' name='parking' checked='checked' value='bicycle1,bicycle2,bicycle3'>
+                                <label class="button-tag" for="rgt-chkParkingBicycle">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Bicycle</div>
+                                </label></div>
+                    </label>
+                    <input class="radio" id="rbtEateries" type="radio" name="layer" value="Places To Eat">
+                    <label class="button-tag food" for="rbtEateries">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-eat" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Places To Eat</div>
+                        <div class="layer-controls-table">                                <div class="button-tag zoomToLayer" id='rgt-eateries3' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Places to Eat</div>
+                                </div></div>
+                    </label>
+                    <input class="radio" id="rbtHousing" type="radio" name="layer" value="Student Housing">
+                    <label class="button-tag housing-students" for="rbtHousing">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-housing" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Student Housing</div>
+                        <div class="layer-controls-table"><div class="toc-keys"><div></div>Legend:</div>
+                                    <div class="toc-keys key-greek"><div class="toc-key"></div>Greek life</div>
+                                    <div class="toc-keys key-dorms"><div class="toc-key"></div>Dorms</div></div>
+                    </label>
+                    <input class="radio" id="rbtTransportation" type="radio" name="layer" value="Transportation">
+                    <label class="button-tag transportation" for="rbtTransportation">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-transportation" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Transportation</div>
+                        <div class="layer-controls-table"><input class="checkbox toctop_checkbox"id='rgt-chkCatTranShuttle' type='checkbox' name='transportation' checked='checked' value='catTranShuttleRoutesGreen,catTranShuttleRoutesNight,catTranShuttleRoutesOrange,catTranShuttleRoutesPurple,catTranShuttleRoutesTeal,catTranShuttleRoutesUSA,catTranShuttleStops1,catTranShuttleStops2,catTranShuttleStops3'>
+                                <label class="button-tag" for="rgt-chkCatTranShuttle">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">CatTran Shuttle</div>
+                                </label>                            
+                                <input class="checkbox toctop_checkbox" id='rgt-chkSunLinkStreetCar' type='checkbox' name='transportation' checked='checked' value='sunLinkStreetCarTracks,sunLinkStreetCarStops1,sunLinkStreetCarStops2,sunLinkStreetCarStops3'>
+                                <label class="button-tag" for="rgt-chkSunLinkStreetCar">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">SunLink Street Car</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkSunTranStops' type='checkbox' name='transportation' checked='checked' value='sunTranStops1,sunTranStops2,sunTranStops3'>
+                                <label class="button-tag" for="rgt-chkSunTranStops">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">SunTran Stops</div>
+                                </label>                            
+                                <input class="checkbox toctop_checkbox" id='rgt-chkBikeRoutes' type='checkbox' name='transportation' checked='checked' value='bikeRoutes'>
+                                <label class="button-tag" for="rgt-chkBikeRoutes">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Bike Routes</div>
+                                </label></div>
+                    </label>
+                    <input class="radio" id="rbtAttractions" type="radio" name="layer" value="UA Attractions & Landmarks">
+                    <label class="button-tag attractions" for="rbtAttractions">
+                        <button class="arizona-btn brillant">
+                            <div class="glyph">
+                                <div class="fs1 ico-ua-landmarks" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </button>
+                        <div class="label">Attractions & Landmarks</div>
+                        <div class="layer-controls-table">                                <input class="checkbox toctop_checkbox" id='rgt-chkHistoricBuildings' type='checkbox' name='attractions' checked='checked' value='historicBuildings'>
+                                <label class="button-tag" for="rgt-chkHistoricBuildings">
+                                    <button class="arizona-btn brillant first-child">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Historic Buildings</div>
+                                </label>
+                                <input class="checkbox toctop_checkbox" id='rgt-chkMuseums' type='checkbox' name='attractions' checked='checked' value='museumsAttractions'>
+                                <label class="button-tag" for="rgt-chkMuseums">
+                                    <button class="arizona-btn brillant child-last">
+                                            <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                                    </button>
+                                    <div class="label">Museums</div>
+                                </label>
+                                <div class="button-tag zoomToLayer" id='rgt-oldMain' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Old Main</div>
+                                </div>
+                                <div class="button-tag zoomToLayer" id='rgt-visitorCenter' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Visitor Center</div>
+                                </div>
+                                <div class="button-tag zoomToLayer" id='rgt-offCampusLandmarks' title='Zoom To Layer'>
+                                    <button class="arizona-btn brillant">
+                                        <div class="glyph ">
+                                            <div class="fs1 ico-ua-move-out" aria-hidden="true" data-ico="&#xe000;"></div>
+                                        </div>
+                                    </button>
+                                    <div class="label">Off Campus Landmarks</div>
+                                </div></div>
+                    </label>
+                    <input class="checkbox" id="chkImagery" type="checkbox" name="imagery" value="Imagery">
+                    <label class="button-tag child-last" for="chkImagery">
+                        <button class="arizona-btn brillant checkbox">
+                            <div class="glyph ">
+                                <div class="checkbox-square"><div class="checkbox-status"></div></div>
+                            </div>
+                        </button>
+                        <div class="label">Aerial View</div>
+                    </label>
+                    <div class="candy-bar" id="candyBar">
+                        <div class="more-resources"><a href="#" onclick="getMoreResources()">More Resources</a></div>
+                        <a href="#" name="link" class="link" id="link" onclick="getLink()">
+                            <div class="arizona-btn brillant">
+                                <div class="fs1 ico-ua-link" aria-hidden="true" data-ico="&#xe000;"></div>
+                            </div>
+                        </a>
+                        <a href="http://www.arizona.edu/website/feedback" name="help" class="help">
+                            <div class="arizona-btn brillant">
+                                <div class="glyph">
+                                    <div class="fs1 ico-ua-info" aria-hidden="true" data-ico="&#xe000;"></div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" name="print" class="print" id="print" onclick="getPrint()">
+                            <div class="arizona-btn brillant">
+                                <div class="glyph">
+                                    <div class="fs1 ico-ua-printer" aria-hidden="true" data-ico="&#xe000;"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="button-hide-sub"></div>
+                <div class="button-hide brillant" id="right-side-tool-tab">
+                    <div class="grippy ico-right-side"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="map">
+        </div>
+    </div>
+    <div class="my-location-wrapper brillant loc-off"><div class="my-location-surface"><div class="my-location ico-location"></div></div></div>
+<!--
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+ 
+    <script>
+    $("#searchbox").select2({ placeholder: "Search Buildings"});
+    $(document).ready(function() { $("#searchbox").select2(); });
+    </script>
+ -->
+</body>
+</html>
+

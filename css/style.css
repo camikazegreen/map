@@ -268,7 +268,12 @@ padding-top: 11px;
 .defaultTOC, .accessibilityTOC,.athleticsTOC,.museumsTOC,.safetyTOC,.librariesTOC,.parkingTOC,.eateriesTOC,.housingTOC,.transportationTOC,.attractionsTOC{
 	display: none;
 }
-
+.modal-box-surface .defaultTOC,.modal-box-surface .accessibilityTOC,.modal-box-surface .athleticsTOC,.modal-box-surface .museumsTOC,.modal-box-surface .safetyTOC,.modal-box-surface .librariesTOC,.modal-box-surface .parkingTOC,.modal-box-surface .eateriesTOC,.modal-box-surface .housingTOC,.modal-box-surface .transportationTOC,.modal-box-surface .attractionsTOC{
+	display: block;
+}
+.modal-box-surface .rowfluid{
+	height: 465px;
+}
 .o{
 	display: block;
 }
@@ -788,7 +793,7 @@ background-color: #844B49;
 .modal-box-wrapper.moreInfo {
 position: fixed;
 left: -343px;
-top: 25%;
+top: 0px;
 -webkit-transition: left, 349ms;
 z-index: 1;
 display: block;
@@ -812,6 +817,7 @@ padding: 0px;
 background: white;
 height: 488px;
 padding: 16px 24px 0 24px;
+overflow: scroll;
 }
 .moreInfo {
 display: none;
@@ -2120,7 +2126,7 @@ max-height: 494px;
 	position: fixed;
 	right: 0;
 	left:auto;
-	top: 25%;
+	top: 0%;
 	z-index: 0;
 	display: block;
 	}

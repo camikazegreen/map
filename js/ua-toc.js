@@ -29,6 +29,7 @@ $(window).load(function (){
     // $('.checkbox-square').removeClass('ico-ua-x');
     $('label[for='+f+'] .checkbox-status').toggleClass('ico-ua-x')
   });
+    
    // jQuery(window).ready(function(){  
    //          jQuery("#btnInit").click(initiate_watchlocation);  
    //          jQuery("#btnStop").click(stop_watchlocation);  
@@ -74,6 +75,13 @@ $(window).load(function (){
   }
   });
 });
+$(document).ready(function(){
+   $('.right-side-tools').localScroll({
+    duration:800,
+    target:'.modal-box-surface',
+    hash:true
+    });
+ });
 
 function stopWatching(){ 
      $(".my-location-wrapper").removeClass('loc-on', '1000');

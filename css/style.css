@@ -272,7 +272,7 @@ padding-top: 11px;
 	display: block;
 }
 .modal-box-surface .rowfluid{
-	height: 465px;
+	height: 500px;
 }
 .o{
 	display: block;
@@ -817,7 +817,7 @@ padding: 0px;
 background: white;
 height: 488px;
 padding: 16px 24px 0 24px;
-overflow: scroll;
+overflow: hidden;
 }
 .moreInfo {
 display: none;

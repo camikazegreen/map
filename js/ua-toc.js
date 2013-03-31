@@ -79,8 +79,14 @@ $(document).ready(function(){
    $('.right-side-tools').localScroll({
     duration:800,
     target:'.modal-box-surface',
-    hash:true
+    hash:false
     });
+   $('.button-tag').click(function(){
+    var radioButton = this.firstChild;
+    var radioButton2 = radioButton.nextSibling;
+    console.log(radioButton2);
+    radioButton2.click();
+   })
  });
 
 function stopWatching(){ 
